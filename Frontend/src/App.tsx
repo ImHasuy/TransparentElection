@@ -1,35 +1,30 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import {MantineProvider} from "@mantine/core";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const [token, setToken] = useState(localStorage.getItem(TokenKeyName));
+    const [nev, setNev] = useState(localStorage.getItem(NameKeyName));
+    const [reszleg,setReszleg] = useState(localStorage.getItem(DepartmentKeyName));
+    const [role, setRole] = useState(localStorage.getItem(RoleKeyName));
+    const [email, setEmail] = useState(localStorage.getItem(EmailKeyName));
+    const [ugyintezoiJogosultsagok, setUgyintezoiJogosultsagok] = useState(() => {
+        const raw = localStorage.getItem(AdminPrivilegesKeyName);
+        return raw ? JSON.parse(raw) : null;
+    });
+
+
+    return <MantineProvider>
+        {/*<Notifications/>*/}
+        <BrowserRouter>
+            <AuthContext.Provider value={{token, setToken,nev, setReszleg, reszleg, setNev, role, setRole,ugyintezoiJogosultsagok, setUgyintezoiJogosultsagok, email, setEmail}}>
+                <Routing/>
+            </AuthContext.Provider>
+        </BrowserRouter>
+    </MantineProvider>;
+
+
 }
-
 export default App
