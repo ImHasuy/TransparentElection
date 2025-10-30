@@ -1,25 +1,22 @@
 import { useState } from 'react'
-import './App.css'
 import {MantineProvider} from "@mantine/core";
 import { BrowserRouter } from "react-router-dom";
+import {EmailKeyName, NameKeyName, RoleKeyName, TokenKeyName} from "./constants/constants.ts";
+import Routing from "./routing/Routing.tsx";
+import { AuthContext } from "./context/AuthContext.tsx";
 
 function App() {
 
     const [token, setToken] = useState(localStorage.getItem(TokenKeyName));
     const [nev, setNev] = useState(localStorage.getItem(NameKeyName));
-    const [reszleg,setReszleg] = useState(localStorage.getItem(DepartmentKeyName));
     const [role, setRole] = useState(localStorage.getItem(RoleKeyName));
     const [email, setEmail] = useState(localStorage.getItem(EmailKeyName));
-    const [ugyintezoiJogosultsagok, setUgyintezoiJogosultsagok] = useState(() => {
-        const raw = localStorage.getItem(AdminPrivilegesKeyName);
-        return raw ? JSON.parse(raw) : null;
-    });
 
 
     return <MantineProvider>
         {/*<Notifications/>*/}
         <BrowserRouter>
-            <AuthContext.Provider value={{token, setToken,nev, setReszleg, reszleg, setNev, role, setRole,ugyintezoiJogosultsagok, setUgyintezoiJogosultsagok, email, setEmail}}>
+            <AuthContext.Provider value={{token, setToken,nev, setNev, role, setRole, email, setEmail}}>
                 <Routing/>
             </AuthContext.Provider>
         </BrowserRouter>
