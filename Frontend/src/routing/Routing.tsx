@@ -3,7 +3,7 @@ import type {ReactElement} from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import {routes} from "./Routes.tsx";
 import useAuth from "../hooks/useAuth.tsx";
-import BasicLayout from "../components/layout/BasicLayout.tsx";
+
 
 const PrivateRoute = ({element}: {element: ReactElement}) => {
     const {isLoggedIn} = useAuth();
@@ -35,9 +35,11 @@ const Routing = () => {
                 />
             ))
         }
+
+        //Lates a Navbar has to be made to have a BasicLayout
         <Route
             path="app"
-            element={<PrivateRoute element={<BasicLayout/>}/>}>
+            element={<PrivateRoute element={<Navigate to="Landing" />}/>}>
             <Route
                 path=""
                 element={<Navigate to="Landing" />}

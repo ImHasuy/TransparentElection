@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import {MantineProvider} from "@mantine/core";
 import { BrowserRouter } from "react-router-dom";
 import {EmailKeyName, NameKeyName, RoleKeyName, TokenKeyName} from "./constants/constants.ts";
 import Routing from "./routing/Routing.tsx";
@@ -13,14 +12,11 @@ function App() {
     const [email, setEmail] = useState(localStorage.getItem(EmailKeyName));
 
 
-    return <MantineProvider>
-        {/*<Notifications/>*/}
-        <BrowserRouter>
+    return<BrowserRouter>
             <AuthContext.Provider value={{token, setToken,nev, setNev, role, setRole, email, setEmail}}>
                 <Routing/>
             </AuthContext.Provider>
-        </BrowserRouter>
-    </MantineProvider>;
+        </BrowserRouter>;
 
 
 }
