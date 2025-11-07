@@ -1,10 +1,13 @@
 
 //import {useState} from "react";
 import { Badge } from "@/components/ui/badge"
-import {Shield, Vote, CircleQuestionMark, Lock, Waypoints, ScanEye} from "lucide-react"
+import {Shield, Lock, Waypoints, ScanEye} from "lucide-react" // Vote, CircleQuestionMark,
 import {Button} from "@/components/ui/button.tsx";
+import {useNavigate} from "react-router-dom";
+import FooterComp from "@/components/footer.tsx";
 function Landing(){
 
+    const navigate = useNavigate();
 
     return(
         <div className="relative min-h-screen w-full bg-gradient-to-tl from-green-300 via-gray-200 to-gray-200 bg-no-repeat bg-contain bg-center text-white text-lg flex flex-col font-sans-serif">
@@ -48,29 +51,14 @@ function Landing(){
                 </div>
                 <div className="grid grid-cols-2 gap-4 mt-10">
                     <div className="text-right mr-30">
-                        <Button size="bigButton" variant="gradient" className=" text-3xl  text-white">Szavazat leadása</Button>
+                        <Button size="bigButton" variant="gradient" className=" text-3xl  text-white" onClick={ () => navigate('/LayerOneVerification')}> Szavazat leadása</Button>
                     </div>
                     <div className="text-left ml-30">
                         <Button size="bigButton" variant="plainBlack" className="text-3xl">Szavazás menete</Button>
                     </div>
                 </div>
-
             </div>
-            <div className="text-center pt-5 pb-5 pr-3.5 pl-3.5 mt-10 bg-white text-black items-center border-t border-t-gray-400">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8" >
-                    <div className="flex justify-center items-center">
-                           <img src="./NVI_logo.jpg" className="justify-self-center"/>
-                           <p className="ml-5">
-                               Tel.:
-                               +36-1-795-3310
-                           </p>
-                        <p className="ml-5">
-                            E-mail:
-                            visz@nvi.hu, sajto@nvi.hu, international@nvi.hu
-                        </p>
-                    </div>
-                </div>
-            </div>
+            <FooterComp/>
         </div>
 
     )

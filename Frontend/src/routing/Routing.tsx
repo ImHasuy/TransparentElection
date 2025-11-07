@@ -26,6 +26,19 @@ const Routing = () => {
             path="/"
             element={<AuthenticatedRedirect element={<Navigate to="Landing" />}/>}
         />
+
+
+        //Public oldalak kezelése
+        {
+            routes.filter(c => !c.isGuestOnly).map(route => (
+                <Route
+                    key={route.path}
+                    path={route.path}
+                    element={route.component}
+                />
+            ))
+        }
+
         {
             routes.filter(route => !route.isPrivate).map(route => (
                 <Route
@@ -35,6 +48,9 @@ const Routing = () => {
                 />
             ))
         }
+
+
+
 
         //Lates a Navbar has to be made to have a BasicLayout
         <Route

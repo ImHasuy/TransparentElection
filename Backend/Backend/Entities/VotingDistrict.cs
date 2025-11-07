@@ -1,6 +1,15 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Entities;
+
+[Index(nameof(CountyCode),IsUnique = false)]
+[Index(nameof(CountyName),IsUnique = false)]
+[Index(nameof(OEVK),IsUnique = false)]
+[Index(nameof(CityCode),IsUnique = false)]
+[Index(nameof(CityName),IsUnique = false)]
+
+
 
 public class VotingDistrict
 {
