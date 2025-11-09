@@ -49,11 +49,11 @@ function Landing(){
                     </h3>
                     <p className="text-black">Addja le a szavazatod most, vagy a szavazás előtt informálódjon a <b>Szavazás menete</b> menüpont alatt!</p>
                 </div>
-                <div className="grid grid-cols-2 gap-4 mt-10">
-                    <div className="text-right mr-30">
+                <div className="grid lg:grid-cols-2 gap-4 mt-10 content-center">
+                    <div className="text-right sm:mr-30 lg:mr-30 ">
                         <Button size="bigButton" variant="gradient" className=" text-3xl  text-white" onClick={ () => navigate('/LayerOneVerification')}> Szavazat leadása</Button>
                     </div>
-                    <div className="text-left ml-30">
+                    <div className="text-left sm:ml-38  lg:ml-30">
                         <Button size="bigButton" variant="plainBlack" className="text-3xl">Szavazás menete</Button>
                     </div>
                 </div>
