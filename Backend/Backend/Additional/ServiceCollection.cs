@@ -7,6 +7,6 @@ public static class ServiceCollection
 {
     public static void AddServices(this IServiceCollection services)
     {
-        services.AddScoped<IVotingDistrictService, VotingDistrictService>();
+        services.AddScoped<IImportAndGenerationService, ImportAndGenerationService>();
     }
 }

@@ -16,6 +16,7 @@ public class AppDbContext :DbContext
     public DbSet<SingleMemberCandidate> SingleMemberCandidates { get; set; }
     public DbSet<VoterAddress> VoterAddresses { get; set; }
     public DbSet<VotingDistrict> VotingDistricts { get; set; }
+    public DbSet<VotingTokens> VotingTokens { get; set; }
     
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)

@@ -7,7 +7,7 @@ namespace Backend.Entities;
 
 [Index(nameof(IDCardNumber),IsUnique = true)]
 [Index(nameof(ResidenceCardNumber),IsUnique = true)]
-[Index(nameof(ZipCode))]
+[Index(nameof(IsNationalMinorityVoter))]
 public class EligibleVoter
 {
     [Key,Required]
@@ -19,7 +19,10 @@ public class EligibleVoter
     [Required]
     public string ResidenceCardNumber { get; set; }
     [Required]
-    public int ZipCode { get; set; }
+    
+    [ForeignKey("VoterAddress")]
+    public Guid VoterAddressId { get; set; }
+    public VoterAddress VoterAddress { get; set; }
     
     public bool IsNationalMinorityVoter { get; set; } = false;
     public NationalMinoritiesEnum NationalMinoritiesEnum { get; set; } = NationalMinoritiesEnum.None;

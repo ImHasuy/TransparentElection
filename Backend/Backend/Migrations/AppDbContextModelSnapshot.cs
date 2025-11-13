@@ -72,23 +72,25 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("VotingDistinctId")
+                    b.Property<Guid>("VoterAddressId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("ZipCode")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("VotingDistinctId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IDCardNumber")
                         .IsUnique();
 
+                    b.HasIndex("IsNationalMinorityVoter");
+
                     b.HasIndex("ResidenceCardNumber")
                         .IsUnique();
 
-                    b.HasIndex("VotingDistinctId");
+                    b.HasIndex("VoterAddressId");
 
-                    b.HasIndex("ZipCode");
+                    b.HasIndex("VotingDistinctId");
 
                     b.ToTable("EligibleVoters");
                 });
@@ -247,7 +249,19 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CityName");
+
+                    b.HasIndex("HouseNumberEnd");
+
+                    b.HasIndex("HouseNumberStart");
+
+                    b.HasIndex("StreetName");
+
+                    b.HasIndex("StreetType");
+
                     b.HasIndex("VotingDistrictId");
+
+                    b.HasIndex("ZipCode");
 
                     b.ToTable("VoterAddresses");
                 });
@@ -274,17 +288,18 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("OEVK")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("EligibleVoterCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("OEVK")
+                        .HasColumnType("integer");
 
                     b.Property<string>("PollingStationAddress")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("PollingStationNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("PollingStationNumber")
+                        .HasColumnType("integer");
 
                     b.Property<string>("TEVK")
                         .IsRequired()
@@ -292,16 +307,53 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CityCode");
+
+                    b.HasIndex("CityName");
+
+                    b.HasIndex("CountyCode");
+
+                    b.HasIndex("CountyName");
+
+                    b.HasIndex("OEVK");
+
                     b.ToTable("VotingDistricts");
+                });
+
+            modelBuilder.Entity("Backend.Entities.VotingTokens", b =>
+                {
+                    b.Property<Guid>("VotingToken")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("VotingDistrictId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("VotingToken");
+
+                    b.HasIndex("VotingDistrictId");
+
+                    b.HasIndex("VotingToken")
+                        .IsUnique();
+
+                    b.ToTable("VotingTokens");
                 });
 
             modelBuilder.Entity("Backend.Entities.EligibleVoter", b =>
                 {
+                    b.HasOne("Backend.Entities.VoterAddress", "VoterAddress")
+                        .WithMany()
+                        .HasForeignKey("VoterAddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Backend.Entities.VotingDistrict", "VotingDistrict")
                         .WithMany("EligibleVoters")
                         .HasForeignKey("VotingDistinctId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("VoterAddress");
 
                     b.Navigation("VotingDistrict");
                 });
@@ -350,6 +402,17 @@ namespace Backend.Migrations
                     b.Navigation("VotingDistrict");
                 });
 
+            modelBuilder.Entity("Backend.Entities.VotingTokens", b =>
+                {
+                    b.HasOne("Backend.Entities.VotingDistrict", "VotingDistrict")
+                        .WithMany("VotingTokensList")
+                        .HasForeignKey("VotingDistrictId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("VotingDistrict");
+                });
+
             modelBuilder.Entity("Backend.Entities.NationalMinorities", b =>
                 {
                     b.Navigation("RegisteredCandidates");
@@ -367,6 +430,8 @@ namespace Backend.Migrations
                     b.Navigation("SingleMemberCandidates");
 
                     b.Navigation("VoterAddresses");
+
+                    b.Navigation("VotingTokensList");
                 });
 #pragma warning restore 612, 618
         }
