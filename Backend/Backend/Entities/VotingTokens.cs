@@ -13,4 +13,6 @@ public class VotingTokens
     [ForeignKey("VotingDistrict")]
     public Guid VotingDistrictId { get; set; }
     public VotingDistrict VotingDistrict { get; set; }
+    public bool IsUsed { get; set; } = false;
+    public DateTime ValidUntil { get; set; } 
 }

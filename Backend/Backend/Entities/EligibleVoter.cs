@@ -30,4 +30,6 @@ public class EligibleVoter
     [ForeignKey("VotingDistrict")]
     public Guid VotingDistinctId { get; set; }
     public VotingDistrict VotingDistrict { get; set; }
+    
+    public bool HasVoted { get; set; } = false;
 }

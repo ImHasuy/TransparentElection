@@ -41,9 +41,9 @@ public class QRCodeGenerationService : IQRCodeGenerationService
             VotingDist = c.VotingDistrictId.ToString()
         }).ToList();
 
-        var encryptedPayloads = payloadList.Select(EncryptPayload);
+        var encryptedPayloads = payloadList.AsParallel().Select(EncryptPayload).ToList();
 
-        Console.WriteLine($"{encryptedPayloads.Count()} payloads generated successfully");
+        Console.WriteLine($"{encryptedPayloads.Count} payloads generated successfully");
         
         QuestPDF.Settings.License = LicenseType.Community;
 
@@ -83,8 +83,11 @@ public class QRCodeGenerationService : IQRCodeGenerationService
                                             var qrCode = writer.encode(encryptedString, BarcodeFormat.QR_CODE, (int)size.Width, (int)size.Height);
                                             var renderer = new SvgRenderer { FontName = "Lato" };
                                             return renderer.Render(qrCode, BarcodeFormat.QR_CODE, null).Content;
-                                            //A Barcode itt roszsul volt ha hibás lenne 
+                                            //A Barcode itt roszsul volt ha hibás lenne
+                                            
+                                            
                                         });
+                                    //Lehet jobb lenne a .QRCode(encryptedString); Ebben az esetben kellene hozzá padding is. De nem tudom
                                 });
                         });
                     }
