@@ -8,4 +8,5 @@ public interface IImportAndGenerationService
     public Task<string> WhereAmI(VoterInputDto address);
     public Task<string> LoadVoterCount(string path);
     public Task<string> GenerateTokensForDistricts();
+    
 }

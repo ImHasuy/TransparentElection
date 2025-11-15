@@ -1,6 +1,6 @@
 namespace Backend.interfaces;
 
-public class IQRCodeGenerationService
+public interface IQRCodeGenerationService
 {
-    
+    Task<string> GenerateQRCodesForDistrict(string DistrictId);
 }

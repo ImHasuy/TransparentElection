@@ -4,6 +4,7 @@ using System.Text.Json;
 using AutoMapper;
 using Backend.Context;
 using Backend.DTOs;
+using Backend.interfaces;
 using Microsoft.EntityFrameworkCore;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
@@ -14,7 +15,7 @@ using ZXing.Rendering;
 
 namespace Backend.Services;
 
-public class QRCodeGenerationService
+public class QRCodeGenerationService : IQRCodeGenerationService
 {
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
@@ -26,10 +27,11 @@ public class QRCodeGenerationService
         _config = config;
     }
     
-    public async Task<string> GenerateQRCodesForDistrinct(string DistrictId)
+    public async Task<string> GenerateQRCodesForDistrict(string DistrictId)
     {
         var subectDistrict = await _context.VotingDistricts.FirstOrDefaultAsync(c=>c.Id.ToString() == DistrictId) ?? throw new Exception("District not found");
-        var DistrictName = $"{subectDistrict.CountyName}_{subectDistrict.OEVK}_{subectDistrict.CityName}_{subectDistrict.PollingStationAddress}_StationNuber_{subectDistrict.PollingStationNumber}"
+        var DistrictName =
+            $"{subectDistrict.CountyName}_{subectDistrict.OEVK}_{subectDistrict.CityName}_{subectDistrict.PollingStationAddress}_StationNuber_{subectDistrict.PollingStationNumber}";
         
         var votingDistricts = await _context.VotingTokens.Where(c=> c.VotingDistrictId.ToString() == DistrictId).ToListAsync() ?? throw new Exception("No districts found");
         
@@ -49,13 +51,14 @@ public class QRCodeGenerationService
             container.Page(page =>
             {
                 page.Size(PageSizes.A4);
-                page.Margin(1 , Unit.Centimetre);
+                page.Margin(0);
 
-                page.Content().PaddingVertical(4).Table(table =>
+                page.Content().Table(table =>
                 {
 
                     table.ColumnsDefinition(columns =>
                     {
+                        columns.RelativeColumn();
                         columns.RelativeColumn();
                         columns.RelativeColumn();
                     });
@@ -67,11 +70,11 @@ public class QRCodeGenerationService
                             tablecell
                                 .Border(1)
                                 .BorderColor(Colors.Grey.Medium)
-                                .Padding(3)
+                                .Padding(0)
                                 .Column(column =>
                                 {
                                     column.Item()
-                                        .Height(120)
+                                        .AspectRatio(1)
                                         .AlignCenter()
                                         .AlignMiddle()
                                         .Svg(size =>
@@ -88,7 +91,7 @@ public class QRCodeGenerationService
                 });
             }));
 
-        document.GeneratePdf($"{DistrictName}");
+        document.GeneratePdf($"{DistrictName}3.pdf");
         return ("fsd");
     }
 
