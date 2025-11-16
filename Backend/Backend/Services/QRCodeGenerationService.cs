@@ -94,8 +94,8 @@ public class QRCodeGenerationService : IQRCodeGenerationService
                 });
             }));
 
-        document.GeneratePdf($"{DistrictName}3.pdf");
-        return ("fsd");
+        document.GeneratePdf($"ExportPdfs/{DistrictName}.pdf");
+        return ("Successfully generated QR codes");
     }
 
     

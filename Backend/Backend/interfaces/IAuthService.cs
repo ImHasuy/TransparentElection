@@ -4,5 +4,5 @@ namespace Backend.interfaces;
 
 public interface IAuthService
 {
-    Task<string> AuthenticateAsyncForVoter(FirstLayerLoginDto firstLayerLoginDto);
+    Task<LoginResponseDto> AuthenticateAsyncForVoter(FirstLayerLoginDto firstLayerLoginDto);
 }

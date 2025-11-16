@@ -8,7 +8,6 @@ namespace Backend.Controllers;
 
 
 [ApiController]
-
 [Route("api/[Controller]")]
 public class AuthController : ControllerBase
 {
@@ -26,7 +25,7 @@ public class AuthController : ControllerBase
         ApiResponse apiResponse = new ApiResponse();
         try
         {
-            apiResponse.Message = await _authService.AuthenticateAsyncForVoter(firstLayerLoginDto);
+            apiResponse.Data = await _authService.AuthenticateAsyncForVoter(firstLayerLoginDto);
             return Ok(apiResponse);
         }
         catch (Exception e)
@@ -37,4 +36,8 @@ public class AuthController : ControllerBase
 
         return BadRequest(apiResponse);
     }
+    
+    
+    
+    
 }

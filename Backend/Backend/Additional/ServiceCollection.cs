@@ -9,5 +9,7 @@ public static class ServiceCollection
     {
         services.AddScoped<IImportAndGenerationService, ImportAndGenerationService>();
         services.AddScoped<IQRCodeGenerationService, QRCodeGenerationService>();
+        services.AddScoped<IEligibleVoterService, EligibleVoterService>();
+        services.AddScoped<IAuthService, AuthService>();
     }
 }

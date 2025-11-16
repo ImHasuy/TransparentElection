@@ -2,11 +2,12 @@ using AutoMapper;
 using Backend.Context;
 using Backend.DTOs;
 using Backend.Entities;
+using Backend.interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Services;
 
-public class EligibleVoterService
+public class EligibleVoterService : IEligibleVoterService
 {
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
@@ -33,7 +34,6 @@ public class EligibleVoterService
         await _context.SaveChangesAsync();
         return $"Succefully added voter with name {tempVoter.Id.ToString()}";
     }
-
     
     public async Task<List<VoterAddressesGetDto>> GetAddressOptions(VoterAddressesPostInputDto voterAddressesPostInputDto)
     {

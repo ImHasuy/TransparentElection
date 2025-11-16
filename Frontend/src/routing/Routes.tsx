@@ -6,20 +6,23 @@ export const routes = [
     {
         path: "Landing",
         component: < Landing />,
+        isAuthedVoter: false,
         isPrivate: false,
-        isGuestOnly: false
+        isPublic: true,
     },
     {
         path: "VotingStartPage",
         component: < VotingStartPage />,
+        isAuthedVoter: true,
         isPrivate: false,
-        isGuestOnly: false
+        isPublic: false,
     },
     {
         path: "LayerOneVerification",
         component: < LayerOneVerification />,
+        isAuthedVoter: false,
         isPrivate: false,
-        isGuestOnly: false
+        isPublic: true,
     }
 
 ]

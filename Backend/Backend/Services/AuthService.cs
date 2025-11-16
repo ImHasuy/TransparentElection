@@ -25,13 +25,16 @@ public class AuthService : IAuthService
     }
      
     
-        public async Task<string> AuthenticateAsyncForVoter(FirstLayerLoginDto firstLayerLoginDto)
+        public async Task<LoginResponseDto> AuthenticateAsyncForVoter(FirstLayerLoginDto firstLayerLoginDto)
         {
             var user = await _context.EligibleVoters
                 .FirstOrDefaultAsync(u => u.IDCardNumber == firstLayerLoginDto.IDCardNumber 
                                           && u.ResidenceCardNumber == firstLayerLoginDto.ResidenceCardNumber) 
                        ?? throw new Exception("Eligible Voter not found with these credentials");
-            return await GenerateTokenForVoter(user);
+            return new LoginResponseDto
+            {
+                token = await GenerateTokenForVoter(user)
+            };
         }
         
         private async Task<string> GenerateTokenForVoter(EligibleVoter eligibleVoter)

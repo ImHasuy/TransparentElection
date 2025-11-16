@@ -1,8 +1,16 @@
 import { useState } from 'react'
 import { BrowserRouter } from "react-router-dom";
-import {EmailKeyName, NameKeyName, RoleKeyName, TokenKeyName} from "./constants/constants.ts";
+import {
+    EmailKeyName, IDCardNumberKeyName,
+    IsNationalMinoritiesKeyName,
+    NameKeyName, NationalMinoritiesEnumName, ResidenceCardNumberKeyName,
+    RoleKeyName,
+    TokenKeyName,
+    TokenKeyNameForVoter
+} from "./constants/constants.ts";
 import Routing from "./routing/Routing.tsx";
 import { AuthContext } from "./context/AuthContext.tsx";
+import {AuthContextForVoters} from "@/context/AuthContextForVoters.tsx";
 
 function App() {
 
@@ -11,10 +19,17 @@ function App() {
     const [role, setRole] = useState(localStorage.getItem(RoleKeyName));
     const [email, setEmail] = useState(localStorage.getItem(EmailKeyName));
 
+    const [tokenForVoter, setTokenForVoter] = useState(localStorage.getItem(TokenKeyNameForVoter));
+    const [IDCardNumber, setIDCardNumber] = useState(localStorage.getItem(IDCardNumberKeyName));
+    const [ResidenceCardNumber, setResidenceCardNumber] = useState(localStorage.getItem(ResidenceCardNumberKeyName));
+    const [IsNationalMinorities, setIsNationalMinorities] = useState(localStorage.getItem(IsNationalMinoritiesKeyName));
+    const [NationalMinoritiesEnum, setNationalMinoritiesEnum] = useState(localStorage.getItem(NationalMinoritiesEnumName));
 
     return<BrowserRouter>
             <AuthContext.Provider value={{token, setToken,nev, setNev, role, setRole, email, setEmail}}>
-                <Routing/>
+                <AuthContextForVoters.Provider value={{tokenForVoter, setTokenForVoter ,IDCardNumber, setIDCardNumber, ResidenceCardNumber, setResidenceCardNumber, IsNationalMinorities, setIsNationalMinorities, NationalMinoritiesEnum, setNationalMinoritiesEnum}}>
+                    <Routing/>
+                </AuthContextForVoters.Provider>
             </AuthContext.Provider>
         </BrowserRouter>;
 
