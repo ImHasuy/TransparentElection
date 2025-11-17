@@ -31,7 +31,7 @@ const GetElementForRoute = (route: any) : ReactElement => {
     if(route.isPublic){
         return route.component;
     }
-    return route.component;
+    return <Navigate to="/Landing"/>;
 }
 
 

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -20,8 +21,11 @@ public class QRCodeGenerationService : IQRCodeGenerationService
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
     private readonly IConfiguration _config;
-    public QRCodeGenerationService(AppDbContext context, IMapper mapper, IConfiguration config)
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    
+    public QRCodeGenerationService(AppDbContext context, IMapper mapper, IConfiguration config, IHttpContextAccessor httpContextAccessor)
     {
+        _httpContextAccessor = httpContextAccessor;
         _context = context;
         _mapper = mapper;
         _config = config;
@@ -95,6 +99,7 @@ public class QRCodeGenerationService : IQRCodeGenerationService
             }));
 
         document.GeneratePdf($"ExportPdfs/{DistrictName}.pdf");
+        Console.WriteLine("Successfully generated QR codes");
         return ("Successfully generated QR codes");
     }
 
@@ -135,6 +140,24 @@ public class QRCodeGenerationService : IQRCodeGenerationService
         return Convert.ToBase64String(encryptedResoult);
     }
 
+    public string? IDCardNumber =>
+        _httpContextAccessor.HttpContext?.User?.FindFirstValue("IDCardNumber");
+    public string? ResidenceCardNumber =>
+        _httpContextAccessor.HttpContext?.User?.FindFirstValue("ResidenceCardNumber");
+    
+    public async Task<string> QRCodeScan(QRCodeDecodeDto qrCodeDecodeDto)
+    {
+        var decryptedData = DecryptData(qrCodeDecodeDto.qrCodeToken);
+        
+        var ValidVoter = await _context.EligibleVoters.FirstOrDefaultAsync(c=> c.IDCardNumber == IDCardNumber && c.ResidenceCardNumber == ResidenceCardNumber) ?? throw new Exception("Voter not found");
+        var ValidToken = await _context.VotingTokens.AnyAsync(c =>
+            c.VotingToken.ToString() == decryptedData.Token);
+        if (!ValidToken) throw new Exception("Invalid Token");
+        
+        return ValidVoter.VotingDistinctId.ToString() != decryptedData.VotingDist ? throw new Exception("This token cannot be used for this voter") : "Valid Token";
+    }
+    
+    
     private DataPayload DecryptData(string encryptedData)
     {
         var encryptedString = Convert.FromBase64String(encryptedData);

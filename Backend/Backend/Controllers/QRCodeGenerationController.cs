@@ -1,4 +1,5 @@
 using Backend.Additional;
+using Backend.DTOs;
 using Backend.interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,11 +7,11 @@ namespace Backend.Controllers;
 
 [ApiController]
 [Route("api/[Controller]")]
-public class QRCodeGenerationService : ControllerBase
+public class QRCodeGenerationController : ControllerBase
 {
     private readonly IQRCodeGenerationService _iqrCodeGenerationService;
 
-    public QRCodeGenerationService(IQRCodeGenerationService iqrCodeGenerationService)
+    public QRCodeGenerationController(IQRCodeGenerationService iqrCodeGenerationService)
     {
         _iqrCodeGenerationService = iqrCodeGenerationService;
     }
@@ -33,7 +34,26 @@ public class QRCodeGenerationService : ControllerBase
 
         return BadRequest(apiResponse);
     }
+    
+    
+    [HttpPost]
+    [Route("QRCodeScan")]
+    public async Task<IActionResult> QRCodeScan(QRCodeDecodeDto qrCodeDecodeDto)
+    {
+        ApiResponse apiResponse = new ApiResponse();
+        try
+        {
+            apiResponse.Message = await _iqrCodeGenerationService.QRCodeScan(qrCodeDecodeDto);
+            return Ok(apiResponse);
+        }
+        catch (Exception e)
+        {
+            apiResponse.StatusCode = 400;
+            apiResponse.Message = e.Message;
+        }
 
+        return BadRequest(apiResponse);
+    }
     
     
 }

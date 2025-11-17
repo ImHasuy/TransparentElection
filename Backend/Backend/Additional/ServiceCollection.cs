@@ -11,5 +11,10 @@ public static class ServiceCollection
         services.AddScoped<IQRCodeGenerationService, QRCodeGenerationService>();
         services.AddScoped<IEligibleVoterService, EligibleVoterService>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IPartyListService, PartyListService>();
+        services.AddScoped<ISingleMemberCandidateService, SingleMemberCandidateService>();
+        
+        
+        services.AddHttpContextAccessor();
     }
 }

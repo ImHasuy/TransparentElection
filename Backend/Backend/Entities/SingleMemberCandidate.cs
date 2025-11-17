@@ -9,6 +9,7 @@ public class SingleMemberCandidate
     public Guid Id { get; set; } = Guid.NewGuid();
     public string Name { get; set; }
     public string PartyName { get; set; }
+    public string FotoPah { get; set; }
     
     [ForeignKey("VotingDistrict")]
     public Guid VotingDistinctId { get; set; }

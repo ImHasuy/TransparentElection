@@ -1,5 +1,5 @@
 import axios from "axios";
-import {TokenKeyName} from "../constants/constants.ts";
+import {TokenKeyName, TokenKeyNameForVoter} from "../constants/constants.ts";
 
 //const isDev = import.meta.env.DEV;
 
@@ -16,8 +16,11 @@ const axiosInstance = axios.create({ baseURL });
 axiosInstance.interceptors.request.use(
     config => {
         const token = localStorage.getItem(TokenKeyName);
+        const tokenForVoter = localStorage.getItem(TokenKeyNameForVoter);
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
+        }else if(tokenForVoter){
+            config.headers['Authorization'] = `Bearer ${tokenForVoter}`;
         }
         return config;
     },

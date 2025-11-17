@@ -18,8 +18,9 @@ export const IDCardNumberKeyName: string = 'IDCardNumberKeyName';
 export const ResidenceCardNumberKeyName: string = 'ResidenceCardNumberKeyName';
 export const IsNationalMinoritiesKeyName: string  = 'IsNationalMinoritiesKeyName';
 export const NationalMinoritiesEnumName: string  = 'NationalMinoritiesEnumName';
-
-
+export const QrCodeSecretString: string  = 'QrCodeSecretString';
+export const SelectedPartyIdName: string = 'SelectedPartyIdName';
+export const SelectedSingleMemberName: string = 'SelectedSingleMember';
 
 
 export const IDCardNumberTokenKey: string = 'IDCardNumber';

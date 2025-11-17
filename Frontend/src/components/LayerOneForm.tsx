@@ -15,6 +15,7 @@ import {Input} from "@/components/ui/input.tsx";
 import type FirstLayerPostInputDto from "@/interfaces/FirstLayerPostInputDto.ts";
 import UseAuthForVoters from "@/hooks/useAuthForVoters.tsx";
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
 
 const formSchema = z.object({
@@ -26,6 +27,7 @@ const formSchema = z.object({
 export function FirstLayerForm() {
     const { login } = UseAuthForVoters()
     const navigate = useNavigate();
+    const [disabled, setDisabled] = useState<boolean>(false)
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -43,10 +45,12 @@ export function FirstLayerForm() {
         }
 
         try{
+            setDisabled(true);
             await login(apiData.idcardnumber, apiData.residencecardnumber);
-            navigate("/VotingStartPage")
-
+            navigate("/LayerTwoVerification")
+            setDisabled(false);
         }catch(e){
+            setDisabled(false);
             console.log(e)
             form.setError("ResidenceCardNumber", {
                 type: "server",
@@ -92,7 +96,7 @@ export function FirstLayerForm() {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" variant="gradient" className="font-bold">Adatok elkuldese</Button>
+                    <Button type="submit" variant="gradient" className="font-bold" disabled={disabled}>Adatok elkuldese</Button>
                 </form>
             </Form>
         </div>
