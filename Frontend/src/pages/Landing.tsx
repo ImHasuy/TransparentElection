@@ -51,10 +51,10 @@ function Landing(){
                 </div>
                 <div className="grid lg:grid-cols-2 gap-4 mt-10 content-center">
                     <div className="text-right sm:mr-30 lg:mr-30 ">
-                        <Button size="bigButton" variant="gradient" className=" text-3xl  text-white" onClick={ () => navigate('/LayerOneVerification')}> Szavazat leadása</Button>
+                        <Button size="bigButton" variant="gradient" className=" text-3xl  text-white" style={{fontFamily: "Momo Trust Display"}} onClick={ () => navigate('/LayerOneVerification')}> Szavazat leadása</Button>
                     </div>
                     <div className="text-left sm:ml-38  lg:ml-30">
-                        <Button size="bigButton" variant="plainBlack" className="text-3xl">Szavazás menete</Button>
+                        <Button size="bigButton" style={{fontFamily: "Momo Trust Display"}} variant="plainBlack" className="text-3xl">Szavazás menete</Button>
                     </div>
                 </div>
             </div>

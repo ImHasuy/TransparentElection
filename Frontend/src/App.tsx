@@ -6,7 +6,7 @@ import {
     NameKeyName, NationalMinoritiesEnumName, ResidenceCardNumberKeyName,
     RoleKeyName,
     TokenKeyName,
-    TokenKeyNameForVoter
+    TokenKeyNameForVoter, VotingDistrictName
 } from "./constants/constants.ts";
 import Routing from "./routing/Routing.tsx";
 import { AuthContext } from "./context/AuthContext.tsx";
@@ -24,10 +24,11 @@ function App() {
     const [ResidenceCardNumber, setResidenceCardNumber] = useState(localStorage.getItem(ResidenceCardNumberKeyName));
     const [IsNationalMinorities, setIsNationalMinorities] = useState(localStorage.getItem(IsNationalMinoritiesKeyName));
     const [NationalMinoritiesEnum, setNationalMinoritiesEnum] = useState(localStorage.getItem(NationalMinoritiesEnumName));
+    const [VotingDistrict ,setVotingDistrict] = useState(localStorage.getItem(VotingDistrictName));
 
     return<BrowserRouter>
             <AuthContext.Provider value={{token, setToken,nev, setNev, role, setRole, email, setEmail}}>
-                <AuthContextForVoters.Provider value={{tokenForVoter, setTokenForVoter ,IDCardNumber, setIDCardNumber, ResidenceCardNumber, setResidenceCardNumber, IsNationalMinorities, setIsNationalMinorities, NationalMinoritiesEnum, setNationalMinoritiesEnum}}>
+                <AuthContextForVoters.Provider value={{tokenForVoter, setTokenForVoter ,IDCardNumber, setIDCardNumber, ResidenceCardNumber, setResidenceCardNumber, IsNationalMinorities, setIsNationalMinorities, NationalMinoritiesEnum, setNationalMinoritiesEnum,VotingDistrict ,setVotingDistrict}}>
                     <Routing/>
                 </AuthContextForVoters.Provider>
             </AuthContext.Provider>

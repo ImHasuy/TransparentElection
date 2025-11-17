@@ -3,7 +3,7 @@ import {
     IDCardNumberKeyName,
     IsNationalMinoritiesKeyName,
     NationalMinoritiesEnumName,
-    ResidenceCardNumberKeyName, TokenKeyNameForVoter
+    ResidenceCardNumberKeyName, TokenKeyNameForVoter, VotingDistrictName
 
 } from "../constants/constants.ts";
 import type AuthContextType from "../interfaces/AuthContextForVoters.ts";
@@ -19,5 +19,6 @@ export const AuthContextForVoters = createContext<AuthContextType>({
     setIsNationalMinorities: () => {},
     NationalMinoritiesEnum: localStorage.getItem(NationalMinoritiesEnumName),
     setNationalMinoritiesEnum: () => {},
-
+    VotingDistrict: localStorage.getItem(VotingDistrictName),
+    setVotingDistrict: () => {},
 })

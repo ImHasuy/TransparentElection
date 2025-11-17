@@ -5,6 +5,8 @@ import type LoginResponse from "../interfaces/LoginResponse.ts";
 import type FirstLayerPostInputDto from "@/interfaces/FirstLayerPostInputDto.ts";
 import type QRCodeDecodeDto from "@/interfaces/QRCodeDecodeDto.ts";
 import type PartyListGetDto from "@/interfaces/PartyListGetDto.ts";
+import type SingleMemberCandidatesGetDto from "@/interfaces/SingleMemberCandidatesGetDto.ts";
+
 
 
 const Department = {
@@ -28,10 +30,16 @@ const QrCode = {
 
 const PartyList = {
     GetPartyList: () =>
-        axiosInstance.get<ApiResponse<PartyListGetDto>>("/api/PartyList/GetPartyList"),
+        axiosInstance.get<ApiResponse<PartyListGetDto[]>>("/api/PartyList/GetPartyList"),
 }
 
 
-const api = {Department, Auth, QrCode,PartyList};
+const SingleMember = {
+    GetSingleMemberByDistrict: () =>
+        axiosInstance.get<ApiResponse<SingleMemberCandidatesGetDto[]>>("/api/SingleMemberCandidate/GetCandidatesForVotingDistrict"),
+}
+
+
+const api = {Department, Auth, QrCode,PartyList, SingleMember};
 
 export default api;

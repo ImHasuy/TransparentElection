@@ -8,5 +8,7 @@ export default interface AuthContext{
     IsNationalMinorities: string | null;
     setIsNationalMinorities: (IsNationalMinorities: string | null) =>void;
     NationalMinoritiesEnum: string | null;
-    setNationalMinoritiesEnum: (NationalMinoritiesEnum: string) => void;
+    setNationalMinoritiesEnum: (NationalMinoritiesEnum: string  | null) => void;
+    VotingDistrict: string | null;
+    setVotingDistrict: (VotingDistrict: string | null) => void;
 }

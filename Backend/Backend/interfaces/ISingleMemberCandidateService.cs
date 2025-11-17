@@ -6,5 +6,5 @@ public interface ISingleMemberCandidateService
 {
     Task<string> AddSingleMemberCandidate(SingleMemberCandidateAddDto singleMemberCandidateAddDto);
 
-    Task<List<SingleMemberCandidatesGetDto>> GetCandidatesForVotingDistrict(SingleMemberCandidatesInputGetDto singleMemberCandidatesInputGetDto);
+    Task<List<SingleMemberCandidatesGetDto>> GetCandidatesForVotingDistrict();
 }

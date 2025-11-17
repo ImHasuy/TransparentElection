@@ -54,7 +54,7 @@ public class AuthService : IAuthService
             {
                 new Claim("IDCardNumber", eligibleVoter.IDCardNumber),
                 new Claim("ResidenceCardNumber", eligibleVoter.ResidenceCardNumber),
-                
+                new Claim("VotingDistrict", eligibleVoter.VotingDistinctId.ToString()),
                 new Claim("IsNationalMinorities", eligibleVoter.IsNationalMinorityVoter.ToString()),
                 new Claim("NationalMinoritiesEnum", eligibleVoter.NationalMinoritiesEnum.ToString()),
                 

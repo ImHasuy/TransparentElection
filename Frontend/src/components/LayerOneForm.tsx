@@ -19,8 +19,8 @@ import {useState} from "react";
 
 
 const formSchema = z.object({
-    IDCardNumber: z.string().min(3),
-    ResidenceCardNumber: z.string().min(3)
+    IDCardNumber: z.string().min(3, {message: "Legalább 3 karater hosszú kell legyen a bemenet!"}),
+    ResidenceCardNumber: z.string().min(3, {message: "Legalább 3 karater hosszú kell legyen a bemenet!"})
 })
 
 
@@ -54,11 +54,11 @@ export function FirstLayerForm() {
             console.log(e)
             form.setError("ResidenceCardNumber", {
                 type: "server",
-                message: "A megadott adatok hibásak!"
+                message: "A megadott adatok hibásak, próbálja újra!"
             })
             form.setError("IDCardNumber", {
                 type: "server",
-                message: "A megadott adatok hibásak!"
+                message: "A megadott adatok hibásak, próbálja újra!"
             })
         }
 
@@ -67,7 +67,7 @@ export function FirstLayerForm() {
     }
 
     return (
-        <div className="content-center m-10">
+        <div className="content-center m-10 text-1xl">
             <Form  {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     <FormField
@@ -75,7 +75,7 @@ export function FirstLayerForm() {
                         name="IDCardNumber"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-black font-bold">Kerem irja be a Személyigazolványa számat!</FormLabel>
+                                <FormLabel className="text-black font-bold text-2xl">Kérem írja be a Személyigazolványa számat!</FormLabel>
                                 <FormControl>
                                     <Input className="text-black" placeholder="Pl.: 123456789" {...field} />
                                 </FormControl>
@@ -88,7 +88,7 @@ export function FirstLayerForm() {
                         name="ResidenceCardNumber"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-black font-bold">Kerem irja be a Lakcím kártyaja számat</FormLabel>
+                                <FormLabel  className="text-black font-bold text-2xl text-center">Kérem írja be a Lakcímkártyája számát!</FormLabel>
                                 <FormControl>
                                     <Input className="text-black" placeholder="Pl.: 987654321" {...field} />
                                 </FormControl>
@@ -96,7 +96,7 @@ export function FirstLayerForm() {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" variant="gradient" className="font-bold" disabled={disabled}>Adatok elkuldese</Button>
+                    <Button type="submit" variant="gradient" className="font-bold w-70" style={{fontFamily: "Momo Trust Display"}}  size={"summaryButton"} disabled={disabled}>Adatok elküldése</Button>
                 </form>
             </Form>
         </div>

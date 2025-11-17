@@ -3,6 +3,7 @@ import LayerTwoVerification from "@/pages/LayerTwoVerification.tsx";
 import LayerOneVerification from "@/pages/LayerOneVerification.tsx";
 import VotingStartPage from "@/pages/VotingStartPage.tsx";
 import SingleMemberVotePage from "@/pages/SingleMemberVotePage.tsx";
+import SummaryPage from "@/pages/SummaryPage.tsx";
 
 export const routes = [
     {
@@ -39,7 +40,15 @@ export const routes = [
         isAuthedVoter: true,
         isPrivate: false,
         isPublic: false,
+    },
+    {
+        path: "SummaryPage",
+        component: < SummaryPage />,
+        isAuthedVoter: true,
+        isPrivate: false,
+        isPublic: false,
     }
+
 
 
 

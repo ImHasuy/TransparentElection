@@ -3,15 +3,15 @@ import {useContext} from "react";
 import {AuthContextForVoters} from "../context/AuthContextForVoters.tsx";
 import {
     IDCardNumberKeyName, IDCardNumberTokenKey, IsNationalMinoritiesKeyName, IsNationalMinoritiesTokenKey,
-   NationalMinoritiesEnumName,
+    NationalMinoritiesEnumName,
     NationalMinoritiesEnumTokenKey, ResidenceCardNumberKeyName, ResidenceCardNumberTokenKey,
-     TokenKeyNameForVoter
+    TokenKeyNameForVoter, VotingDistrictName, VotingDistrictTokenKey
 } from "../constants/constants.ts";
 import api from "../api/api.ts";
 
 
 const useAuth = () => {
-    const { tokenForVoter, setTokenForVoter ,IDCardNumber, setIDCardNumber, ResidenceCardNumber, setResidenceCardNumber, IsNationalMinorities, setIsNationalMinorities, NationalMinoritiesEnum, setNationalMinoritiesEnum} = useContext(AuthContextForVoters)
+    const { tokenForVoter, setTokenForVoter ,IDCardNumber, setIDCardNumber, ResidenceCardNumber, setResidenceCardNumber, IsNationalMinorities, setIsNationalMinorities, NationalMinoritiesEnum, setNationalMinoritiesEnum, VotingDistrict, setVotingDistrict} = useContext(AuthContextForVoters)
 
 
     const isAuthedVoter = !!tokenForVoter;
@@ -30,6 +30,7 @@ const useAuth = () => {
                 const ResidenceCardNumber = decoded[ResidenceCardNumberTokenKey];
                 const IsNationalMinorities = decoded[IsNationalMinoritiesTokenKey];
                 const NationalMinoritiesEnum = decoded[NationalMinoritiesEnumTokenKey];
+                const VotingDistrict = decoded[VotingDistrictTokenKey];
 
                 setTokenForVoter(token);
                 localStorage.setItem(TokenKeyNameForVoter, token);
@@ -46,6 +47,9 @@ const useAuth = () => {
                 setNationalMinoritiesEnum(NationalMinoritiesEnum);
                 localStorage.setItem(NationalMinoritiesEnumName, NationalMinoritiesEnum);
 
+                setVotingDistrict(VotingDistrict);
+                localStorage.setItem(VotingDistrictName, VotingDistrict);
+
             }else {
                 throw new Error(response.data.message || "Ismeretlen hiba");
             }
@@ -58,7 +62,7 @@ const useAuth = () => {
         setTokenForVoter(null);
     }
 
-    return{login, logout, isAuthedVoter: isAuthedVoter, tokenForVoter, IDCardNumber, ResidenceCardNumber, IsNationalMinorities,NationalMinoritiesEnum}
+    return{login, logout, isAuthedVoter: isAuthedVoter, tokenForVoter, IDCardNumber, ResidenceCardNumber, IsNationalMinorities,NationalMinoritiesEnum, VotingDistrict}
 }
 
 export default useAuth;

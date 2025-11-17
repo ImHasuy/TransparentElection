@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using AutoMapper;
 using Backend.Context;
 using Backend.DTOs;
@@ -11,11 +12,13 @@ public class SingleMemberCandidateService : ISingleMemberCandidateService
 {
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public SingleMemberCandidateService(AppDbContext context, IMapper mapper)
+    public SingleMemberCandidateService(AppDbContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
         _mapper = mapper;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<string> AddSingleMemberCandidate(SingleMemberCandidateAddDto singleMemberCandidateAddDto)
@@ -26,11 +29,13 @@ public class SingleMemberCandidateService : ISingleMemberCandidateService
         return $"Succefully added the candidate with id {temp.Id.ToString()}";
     }
     
+    private string? RequesterVotingDistrict =>
+        _httpContextAccessor.HttpContext?.User?.FindFirstValue("VotingDistrict");
     
-    public async Task<List<SingleMemberCandidatesGetDto>> GetCandidatesForVotingDistrict(SingleMemberCandidatesInputGetDto singleMemberCandidatesInputGetDto)
+    public async Task<List<SingleMemberCandidatesGetDto>> GetCandidatesForVotingDistrict()
     {
         var temp = await _context.SingleMemberCandidates.Where(c =>
-            c.VotingDistinctId.ToString() == singleMemberCandidatesInputGetDto.VotingDistinctId)
+            c.VotingDistinctId.ToString() == RequesterVotingDistrict)
             .ToListAsync();
 
         var mapped = _mapper.Map<List<SingleMemberCandidatesGetDto>>(temp);

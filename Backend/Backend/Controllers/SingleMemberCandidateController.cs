@@ -1,12 +1,13 @@
 using Backend.Additional;
 using Backend.DTOs;
 using Backend.interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
 
 [ApiController]
-
+[Authorize]
 [Route("api/[Controller]")]
 public class SingleMemberCandidateController : ControllerBase
 {
@@ -18,7 +19,7 @@ public class SingleMemberCandidateController : ControllerBase
     }
 
     
-    
+    [AllowAnonymous]
     [HttpPost]
     [Route("AddSingleMemberCandidate")]
     public async Task<IActionResult> AddSingleMemberCandidate(SingleMemberCandidateAddDto singleMemberCandidateAddDto)
@@ -38,14 +39,14 @@ public class SingleMemberCandidateController : ControllerBase
         return BadRequest(apiResponse);
     }
     
-    [HttpPost]
+    [HttpGet]
     [Route("GetCandidatesForVotingDistrict")]
-    public async Task<IActionResult>  GetCandidatesForVotingDistrict(SingleMemberCandidatesInputGetDto singleMemberCandidatesInputGetDto)
+    public async Task<IActionResult>  GetCandidatesForVotingDistrict()
     {
         ApiResponse apiResponse = new ApiResponse();
         try
         {
-            apiResponse.Data = await _partyListService.GetCandidatesForVotingDistrict(singleMemberCandidatesInputGetDto);
+            apiResponse.Data = await _partyListService.GetCandidatesForVotingDistrict();
             return Ok(apiResponse);
         }
         catch (Exception e)
