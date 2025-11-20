@@ -11,10 +11,10 @@ function VotingStartPage() {
                     Kérjük igazolja személyazonosságát!
                 </h1>
                 <p className="text-black text-center mt-10">
-                    Az alábbi mezőkben adja meg Személyigazolványa és lakcímkártyája számát!
+                    Az alábbi mezőkben adja meg személyigazolványa és lakcímkártyája számát!
                 </p>
                 <p className="text-black text-center mt-2">
-                    A személyes adatai alapján azanosítjuk, hogy jogosult-e szavazni, de ezen adatok nem lesznek eltárolva.
+                    A személyes adatai alapján azonosítjuk, hogy jogosult-e szavazni, de ezen adatok nem lesznek eltárolva.
                 </p>
             </div>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative flex-grow flex justify-center items-center">

@@ -7,7 +7,6 @@ import {useNavigate} from "react-router-dom";
 
     const QrScanner = () => {
 
-        const [scanResult, setScanResult] = useState<string | null>(null);
         const scannerContainerId = "qr-scanner-container";
         const [error, setError] = useState<string | null>(null);
         const html5QrCodeRef = useRef<Html5Qrcode | null>(null);
@@ -52,8 +51,6 @@ import {useNavigate} from "react-router-dom";
                 }
 
                 if (isProcessing.current) return;
-                setScanResult(decodedText);
-                console.log("Scan result:", scanResult);
                 console.log(decodedText);
                 await handleSubmit(decodedText);
             }
@@ -82,11 +79,12 @@ import {useNavigate} from "react-router-dom";
                 })
                 scanStartTime.current = Date.now();
 
-            }, 100); // 100ms-es késleltetés
+            }, 200);
 
             return () => {
                  try{
                      clearTimeout(startTimer);
+                     if (!html5QrCode) return;
                      html5QrCode.stop()
                          .then(() => console.log("Scanner stopped successfully."))
                          .catch(err => console.error("Error stopping scanner:", err));

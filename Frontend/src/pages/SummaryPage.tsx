@@ -84,7 +84,7 @@ function SummaryPage() {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative flex-grow  justify-center items-center">
                 <div className="text-center">
                     <h2 className="text-2xl text-black text-center font-extrabold mb-3">
-                        Ellenőrizze, a választottak megfelelnek-e a valóságnak!
+                        Ellenőrizze, hogy a felsoroltak megfelelnek-e a valóságnak!
                     </h2>
                 </div>
                 <div className="flex flex-col items-center">

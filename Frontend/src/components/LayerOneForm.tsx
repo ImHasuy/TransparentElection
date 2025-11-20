@@ -75,7 +75,7 @@ export function FirstLayerForm() {
                         name="IDCardNumber"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-black font-bold text-2xl">Kérem írja be a Személyigazolványa számat!</FormLabel>
+                                <FormLabel className="text-black font-bold text-2xl">Kérem írja be a személyigazolványa számát!</FormLabel>
                                 <FormControl>
                                     <Input className="text-black" placeholder="Pl.: 123456789" {...field} />
                                 </FormControl>
@@ -88,7 +88,7 @@ export function FirstLayerForm() {
                         name="ResidenceCardNumber"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel  className="text-black font-bold text-2xl text-center">Kérem írja be a Lakcímkártyája számát!</FormLabel>
+                                <FormLabel  className="text-black font-bold text-2xl text-center">Kérem írja be a lakcímkártyája számát!</FormLabel>
                                 <FormControl>
                                     <Input className="text-black" placeholder="Pl.: 987654321" {...field} />
                                 </FormControl>
