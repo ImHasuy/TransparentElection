@@ -5,6 +5,11 @@ import LoadingOverlay from "@/components/LoadingOverlay.tsx";
 import {useState} from "react";
 import SummaryComponent from "@/components/SummaryComponent.tsx";
 import { Modal } from "@/components/Modal";
+import api from "@/api/api.ts";
+import type BlockchainVoteInputDto from "@/interfaces/BlockchainVoteInputDto.ts";
+import {QrCodeSecretString, SelectedPartyIdName, SelectedSingleMemberName} from "@/constants/constants.ts";
+import {ethers} from "ethers";
+import type VotePayload from "@/interfaces/VotePayload.ts";
 
 
 
@@ -12,22 +17,54 @@ function SummaryPage() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false)
     const [open, setOpen] = useState(false);
+    const [error, setError] = useState<boolean>(false);
 
-    const handleSubmit = () => {
+
+    const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+
+
+    const handleSubmit = async () => {
         setLoading(true);
-        try{
 
-           sessionStorage.clear();
-           localStorage.clear();
+        const userWallet = ethers.Wallet.createRandom();
+        console.log("Generált cím:", userWallet.address);
 
-           navigate("/Landing");
-        }catch (e) {
-            console.log(e);
-        }finally {
-            setLoading(false);
-            setOpen(false);
+        const requestData :BlockchainVoteInputDto = {
+            PartyVote: sessionStorage.getItem(SelectedPartyIdName)!,
+            SingleMemberVote: sessionStorage.getItem(SelectedSingleMemberName)!,
+            votingToken: sessionStorage.getItem(QrCodeSecretString)!
         }
 
+        const messageHash = ethers.solidityPackedKeccak256(
+            ["string","string", "address"],
+            [requestData.PartyVote,requestData.SingleMemberVote, CONTRACT_ADDRESS]
+        );
+
+        const messageBytes = ethers.getBytes(messageHash);
+        const signature = await userWallet.signMessage(messageBytes);
+
+        console.log("Aláírás:", signature);
+
+        const payload: VotePayload = {
+            userAddress: userWallet.address,
+            partyVote: requestData.PartyVote,
+            singleMemberVote: requestData.SingleMemberVote,
+            votingToken: requestData.votingToken,
+            signature: signature
+        };
+
+        try{
+            const response = await api.BlockChain.CommitVoteToBlockchain(payload);
+            console.log(response);
+            navigate("/ConfirmalPage");
+        }catch (e) {
+            console.log(e);
+            setOpen(false);
+            setLoading(false);
+            setError(true);
+        }finally {
+            setLoading(false);
+        }
     }
 
 
@@ -52,11 +89,11 @@ function SummaryPage() {
                 </div>
                 <div className="flex flex-col items-center">
                     <div className=" overflow-hidden rounded-2xl shadow-2xl border-4 border-white h-fit w-200 bg-white">
-                        <SummaryComponent setLoading={setLoading}/>
+                        <SummaryComponent setLoading={setLoading} error={error}/>
                     </div>
                 </div>
                 <div className={" flex items-center justify-center mt-7"}>
-                    <Button size="lg" variant="outline" className=" text-3xl bg-red-500 text-white p-7 " onClick={ () => setOpen(true)}>SZAVAZAT LEADÁSA</Button>
+                    <Button size="lg" variant="outline" className=" text-3xl bg-red-500 text-white p-7 " style={{fontFamily: "Momo Trust Display"}} onClick={ () => setOpen(true)}>SZAVAZAT LEADÁSA</Button>
                 </div>
             </div>
             <FooterComp/>

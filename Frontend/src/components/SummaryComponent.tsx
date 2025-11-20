@@ -9,7 +9,7 @@ import {
 
 
 // @ts-ignore
-function SummaryComponent ({ setLoading}){
+function SummaryComponent ({ setLoading, error}){
     const [choosenParty] = useState<PartyListGetDto>( () =>
     {
         const storedObject = sessionStorage.getItem(SelectedPartyObjectName);
@@ -50,6 +50,11 @@ function SummaryComponent ({ setLoading}){
                     <p className={"font-bold"}>{choosenSingleMember.partyName}</p>
                 </div>
             </div>
+            {error && (
+                <div className="text-center mt-5 mb-10">
+                    <h1 className="text-4xl text-red-500 text-center font-extrabold mb-5 mt-15 ">Hiba a leadás során, próbálja újra!</h1>
+                </div>
+            )}
         </div>);
 
 }

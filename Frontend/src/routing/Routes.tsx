@@ -4,6 +4,7 @@ import LayerOneVerification from "@/pages/LayerOneVerification.tsx";
 import VotingStartPage from "@/pages/VotingStartPage.tsx";
 import SingleMemberVotePage from "@/pages/SingleMemberVotePage.tsx";
 import SummaryPage from "@/pages/SummaryPage.tsx";
+import ConfirmalPage from "@/pages/ConfirmalPage.tsx";
 
 export const routes = [
     {
@@ -47,10 +48,12 @@ export const routes = [
         isAuthedVoter: true,
         isPrivate: false,
         isPublic: false,
+    },
+    {
+        path: "ConfirmalPage",
+        component: < ConfirmalPage />,
+        isAuthedVoter: true,
+        isPrivate: false,
+        isPublic: false,
     }
-
-
-
-
-
 ]

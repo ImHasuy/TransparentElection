@@ -13,7 +13,7 @@ public static class ServiceCollection
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IPartyListService, PartyListService>();
         services.AddScoped<ISingleMemberCandidateService, SingleMemberCandidateService>();
-        
+        services.AddScoped<IBlockchainService, BlockchainService>();
         
         services.AddHttpContextAccessor();
     }

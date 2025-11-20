@@ -7,6 +7,8 @@ import type QRCodeDecodeDto from "@/interfaces/QRCodeDecodeDto.ts";
 import type PartyListGetDto from "@/interfaces/PartyListGetDto.ts";
 import type SingleMemberCandidatesGetDto from "@/interfaces/SingleMemberCandidatesGetDto.ts";
 
+import type VotePayload from "@/interfaces/VotePayload.ts";
+
 
 
 const Department = {
@@ -39,7 +41,12 @@ const SingleMember = {
         axiosInstance.get<ApiResponse<SingleMemberCandidatesGetDto[]>>("/api/SingleMemberCandidate/GetCandidatesForVotingDistrict"),
 }
 
+const BlockChain = {
+    CommitVoteToBlockchain: (dto: VotePayload) =>
+        axiosInstance.post<ApiResponse<string>>("/api/Blockchain/CommitVoteToBlockchain",dto),
+}
 
-const api = {Department, Auth, QrCode,PartyList, SingleMember};
+
+const api = {Department, Auth, QrCode,PartyList, SingleMember, BlockChain};
 
 export default api;
