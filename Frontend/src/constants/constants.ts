@@ -8,3 +8,35 @@ export const EmailKeyName: string  = 'EmailKeyName';
 export const NameTokenKey: string = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name';
 export const EmailTokenKey: string = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress';
 export const RoleTokenKey: string = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
+
+
+
+
+
+export const TokenKeyNameForVoter: string = 'tokenFotVoter';
+export const IDCardNumberKeyName: string = 'IDCardNumberKeyName';
+export const ResidenceCardNumberKeyName: string = 'ResidenceCardNumberKeyName';
+export const IsNationalMinoritiesKeyName: string  = 'IsNationalMinoritiesKeyName';
+export const NationalMinoritiesEnumName: string  = 'NationalMinoritiesEnumName';
+export const QrCodeSecretString: string  = 'QrCodeSecretString';
+
+
+
+export const SelectedPartyIdName: string = 'SelectedPartyIdName';
+export const SelectedPartyObjectName: string = 'SelectedPartyObjectName';
+
+
+export const VotingDistrictName: string = 'VotingDistrictName';
+
+
+export const SelectedSingleMemberName: string = 'SelectedSingleMember';
+export const SelectedSingleMemberObjectName: string = 'SelectedSingleMemberObjectName';
+
+
+export const VotingDistrictTokenKey: string = 'VotingDistrict';
+export const IDCardNumberTokenKey: string = 'IDCardNumber';
+export const ResidenceCardNumberTokenKey: string = 'ResidenceCardNumber';
+export const IsNationalMinoritiesTokenKey: string = 'IsNationalMinorities';
+export const NationalMinoritiesEnumTokenKey: string = 'NationalMinoritiesEnum';
+
+

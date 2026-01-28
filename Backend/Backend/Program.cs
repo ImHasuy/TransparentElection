@@ -15,7 +15,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("ConnectionAtHome");
+    var connectionString = builder.Configuration.GetConnectionString("Testconnection");
     optionsBuilder.UseNpgsql(connectionString);
 });
 
@@ -27,13 +27,23 @@ builder.Services.AddServices();
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("UserPolicy", policy => policy.RequireRole("User"));
     options.AddPolicy("AllUserPolicy", policy => policy.RequireRole("User" , "Admin"));
 });
 //auth\\
 
 
 //Later Cors
-//builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("https://localhost:5173", "http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
 builder.Services.AddAutoMapper(cfg => { }, typeof(AutoMapperProfile));
 
@@ -102,6 +112,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors();   
 app.UseAuthentication();
 app.UseAuthorization();
 
